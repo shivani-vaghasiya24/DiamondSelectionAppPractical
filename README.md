@@ -42,3 +42,48 @@ lib/
 │   ├── custom_text_row.dart
 │   ├── diamond_tile.dart
 │   ├── no_data_widget.dart
+
+
+---
+
+## 🏗️ State Management (BLoC)
+
+The app uses **BLoC (Business Logic Component)** to manage UI state.
+
+### 1️⃣ **Diamond BLoC (Fetching & Filtering Diamonds)**  
+Located in `module/diamond/bloc/`
+- **Events:**
+  - `FetchDiamonds` → Loads all diamonds
+  - `FilterDiamonds` → Filters diamonds based on user input
+  - `SortDiamonds` → Sorts diamonds by price or carat
+- **State:**
+  - `DiamondLoading` → Shows loading indicator
+  - `DiamondLoaded` → Displays diamonds on UI
+  - `DiamondError` → Handles errors
+
+### 2️⃣ **Cart BLoC (Managing Cart Items)**
+Located in `module/cart/bloc/`
+- **Events:**
+  - `LoadCart` → Loads stored cart items
+  - `AddToCart` → Adds a diamond to the cart
+  - `RemoveFromCart` → Removes a diamond from the cart
+- **State:**
+  - `CartLoading` → Shows loading indicator
+  - `CartLoaded` → Displays cart items
+  - `CartError` → Handles errors
+
+✅ **Cart updates UI in real-time** by listening to BLoC state changes.
+
+---
+
+## 💾 Persistent Storage (Hive)
+
+**Hive** is used for storing cart items locally.
+
+### **How it Works**
+- **Storage Box Name:** `"cartBox"`
+- **Stored Data:** List of `Diamond` objects
+- **Location:** `cart_bloc.dart`
+
+### **Hive Storage Logic**
+- **Location:** `cart_bloc.dart`
