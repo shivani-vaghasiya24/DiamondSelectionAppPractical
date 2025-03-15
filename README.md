@@ -53,7 +53,7 @@ The app uses **BLoC (Business Logic Component)** to manage UI state.
 ### 1️⃣ **Diamond BLoC (Fetching & Filtering Diamonds)**  
 Located in `module/diamond/bloc/`
 - **Events:**
-  - `FetchDiamonds` → Loads all diamonds
+  - `LoadDiamonds` → Loads all diamonds
   - `FilterDiamonds` → Filters diamonds based on user input
   - `SortDiamonds` → Sorts diamonds by price or carat
 - **State:**
