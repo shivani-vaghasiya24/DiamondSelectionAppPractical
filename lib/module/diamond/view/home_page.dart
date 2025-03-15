@@ -1,23 +1,26 @@
+import 'package:diamond_selection_app/module/cart/bloc/cart_bloc.dart';
+import 'package:diamond_selection_app/module/cart/bloc/cart_state.dart';
 import 'package:diamond_selection_app/module/cart/view/cart_page.dart';
 import 'package:diamond_selection_app/module/diamond/bloc/diamond_bloc.dart';
 import 'package:diamond_selection_app/module/diamond/bloc/diamond_event.dart';
 import 'package:diamond_selection_app/module/diamond/bloc/diamond_state.dart';
 import 'package:diamond_selection_app/module/diamond/view/diamond_detail_page.dart';
 import 'package:diamond_selection_app/module/diamond/view/filter_page.dart';
+import 'package:diamond_selection_app/utils/app_colors.dart';
+import 'package:diamond_selection_app/utils/app_strings.dart';
+import 'package:diamond_selection_app/utils/app_styles.dart';
 import 'package:diamond_selection_app/widgets/diamond_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomePage extends StatelessWidget {
-  final TextEditingController _searchController = TextEditingController();
-
   HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Diamond Selection"),
+        title: Text(AppStrings.diamondSelecton),
         actions: [
           IconButton(
             padding: EdgeInsets.all(4),
@@ -30,14 +33,49 @@ class HomePage extends StatelessWidget {
               );
             },
           ),
-          IconButton(
-            padding: EdgeInsets.all(4),
-            constraints: BoxConstraints(),
-            icon: Icon(Icons.shopping_cart),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => CartPage()),
+          BlocBuilder<CartBloc, CartState>(
+            builder: (context, state) {
+              int cartItemCount = 0;
+              if (state is CartLoaded) {
+                cartItemCount = state.cartItems.length;
+              }
+
+              return Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  IconButton(
+                    padding: EdgeInsets.only(top: 10),
+                    // constraints: BoxConstraints(),
+                    icon: Icon(Icons.shopping_cart),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => CartPage()),
+                      );
+                    },
+                  ),
+                  if (cartItemCount > 0) // Show dot only if items exist in cart
+                    Positioned(
+                      right: 8,
+                      top: 8,
+                      child: Container(
+                        padding: EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Text(
+                          "${cartItemCount.toString()}",
+                          style: AppStyles.textStyle12.copyWith(
+                              color: AppColors.secondaryColor, fontSize: 10),
+                        ),
+                        constraints: BoxConstraints(
+                          minWidth: 15,
+                          minHeight: 15,
+                        ),
+                      ),
+                    ),
+                ],
               );
             },
           ),

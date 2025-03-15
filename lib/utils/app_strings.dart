@@ -1,5 +1,6 @@
 class AppStrings {
   static const String appName = "Diamond Selection App";
+  static const String diamondSelecton = "💎 Diamond Selection";
   static const String addFilterDiamonds = "Add Filter Diamonds";
   static const String filterDiamonds = "Filter Diamonds";
   static const String noDimondMessage = "No Dimond found!";
